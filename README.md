@@ -1,55 +1,69 @@
 # Escriba
 
-Quadro kanban local das pendências de trabalho, tiradas das conversas do Teams, com um cérebro
-que liga cada pendência ao projeto certo e um agente que trabalha na pasta daquele projeto.
-Roda só na sua máquina: servidor Python de biblioteca padrão e painel sem framework nem CDN.
+A local kanban board for the work requests buried in your Microsoft Teams conversations. A local
+"brain" links each task to the right project, and an agent works inside that project's folder.
+Everything runs on your machine: a Python server built only on the standard library, and a web panel
+with no framework, build step or CDN.
 
-## Requisitos
+> The interface, the prompts and the docs under `docs/` are in Brazilian Portuguese.
 
-- Windows, com o Teams (novo) instalado e já aberto pelo menos uma vez.
-- Python 3.11+ e um `.venv` na raiz com o `requirements.txt` (só a leitura do cache do Teams precisa):
-  `python -m venv .venv` e `.venv\Scripts\python.exe -m pip install -r requirements.txt`.
-- [Claude Code](https://claude.com/claude-code) instalado e com login feito: o assistente, a leitura do
-  Teams e o agente usam o `claude -p`.
+## Requirements
 
-## Configurar
+- Windows, with the new Teams app installed and opened at least once.
+- Python 3.11+ and a `.venv` at the repository root with `requirements.txt` installed (only the Teams
+  cache reader needs it):
+  `python -m venv .venv` then `.venv\Scripts\python.exe -m pip install -r requirements.txt`.
+- [Claude Code](https://claude.com/claude-code) installed and logged in: the assistant, the Teams reader
+  and the agent all run `claude -p`.
 
-Copie `config.exemplo.json` para `config.local.json` e troque pelos seus valores: seu nome e o que você
-faz (vão nos prompts), as áreas do quadro (até 8) e, se for usar, o Jira. O `config.local.json` fica fora
-do Git. Sem ele, o Escriba sobe com áreas genéricas.
+## Configuration
 
-## Uso
+Copy `config.exemplo.json` to `config.local.json` and fill in your own values: your name and role (used in
+the prompts), the board areas (up to 8) and, if you want it, your Jira settings. `config.local.json` is
+ignored by Git. Without it, Escriba starts with generic areas.
 
-Dois cliques em `iniciar-mesa.cmd` (ou o mesmo comando em qualquer terminal). O painel abre em
-http://127.0.0.1:8765 e só aceita conexão desta máquina.
+## Usage
 
-No painel: **Atualizar do Teams** (ícone ⟳ na barra) lê as conversas novas e atualiza o quadro;
-**Ctrl+K** abre a busca e o assistente; cada pendência tem a aba **Agente**, que roda o Claude Code na
-pasta do projeto, só lendo arquivos, e grava o que produzir em `entregas/`. O **Radar** (G R) é a tela de
-acompanhamento, para deixar aberta num monitor: cabe numa tela, tem filtro cruzado e um Modo TV.
+Double-click `iniciar-mesa.cmd` (or run it from any terminal). The panel opens at
+http://127.0.0.1:8765 and only accepts connections from this machine.
 
-Pela linha de comando, com o Python do `.venv`:
+In the panel:
+
+- **Atualizar do Teams** (the ⟳ icon in the toolbar) reads new Teams messages and updates the board.
+- **Ctrl+K** opens search and the assistant, which takes plain-language requests ("já fiz a #3").
+- Each task has an **Agente** tab that runs Claude Code in the project folder, read-only, and saves what
+  it produces under `entregas/`. It never writes into your projects without a click.
+- **Radar** (G R) is a monitoring dashboard meant to stay open on a second screen: it fits one screen,
+  has cross-filtering and a TV mode.
+- **Daily** (G D) summarizes what moved since your last stand-up.
+
+From the command line, with the `.venv` Python:
 
 ```
-.venv\Scripts\python.exe pendencias.py listar          # as pendências abertas
-.venv\Scripts\python.exe servidor\teams.py --simular   # leitura do Teams sem gravar
-.venv\Scripts\python.exe servidor\cerebro.py indexar   # atualiza o índice dos projetos
+.venv\Scripts\python.exe pendencias.py listar          # open tasks
+.venv\Scripts\python.exe servidor\teams.py --simular   # Teams read, dry run
+.venv\Scripts\python.exe servidor\cerebro.py indexar   # rebuild the project index
 ```
 
-## Onde está cada coisa
+## Where things are
 
-| Arquivo | O que é |
+| File | What it is |
 |---|---|
-| `CLAUDE.md` | Arquitetura, regras e a rotina de atualização. Comece por aqui. |
-| `docs/API.md` | Contrato do servidor. É ele que vale quando os documentos divergirem. |
-| `docs/FRONTEND.md` | Como o painel está organizado. |
-| `config.exemplo.json` | Formato do `config.local.json`. |
+| `CLAUDE.md` | Architecture, rules and the update routine. Start here. |
+| `docs/API.md` | The server contract. It wins whenever the docs disagree. |
+| `docs/FRONTEND.md` | How the panel is organized. |
+| `config.exemplo.json` | The format of `config.local.json`. |
 
-`dados/`, `export/`, `entregas/` e `config.local.json` ficam fora do Git: são as pendências, as conversas
-exportadas, o trabalho do agente e os seus dados.
+`dados/`, `export/`, `entregas/` and `config.local.json` are ignored by Git: they hold your tasks, the
+exported conversations, the agent's output and your personal settings.
 
-## Caminho alternativo pelo Microsoft Graph
+## Extending the agent
 
-`exportar-teams.ps1` busca as conversas pelo Microsoft Graph (permissão delegada `Chat.Read`). Muitos
-tenants recusam esse consentimento; por isso o caminho padrão é a leitura da cópia local do cache do
-Teams (`extrair_cache.py`, chamado pelo botão do painel).
+An optional package under `servidor/local/` (also ignored by Git) can give the agent extra tools through
+MCP servers and add its own section to the agent tab. See "Extensões locais do agente" in `CLAUDE.md`.
+
+## Alternative: Microsoft Graph
+
+`exportar-teams.ps1` fetches conversations through Microsoft Graph (delegated `Chat.Read` permission).
+Many tenants refuse that consent, so the default path reads a local copy of the Teams cache instead
+(`extrair_cache.py`, called by the panel button).
