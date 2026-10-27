@@ -1,0 +1,81 @@
+{
+  "_leia": "Copie para config.local.json (fica fora do Git) e troque pelos seus valores. Tudo é opcional.",
+  "dono": {
+    "nome": "Ana",
+    "nome_completo": "Ana Souza",
+    "descricao": "analista de dados"
+  },
+  "areas": [
+    {
+      "nome": "Produto",
+      "curto": "Produto",
+      "apelidos": [
+        "produto",
+        "prod"
+      ]
+    },
+    {
+      "nome": "Operações",
+      "curto": "Operações",
+      "apelidos": [
+        "operacoes",
+        "ops"
+      ]
+    },
+    {
+      "nome": "Comercial",
+      "curto": "Comercial",
+      "apelidos": [
+        "comercial",
+        "vendas"
+      ]
+    },
+    {
+      "nome": "Financeiro",
+      "curto": "Financeiro",
+      "apelidos": [
+        "financeiro",
+        "fin"
+      ]
+    },
+    {
+      "nome": "Marketing",
+      "curto": "Marketing",
+      "apelidos": [
+        "marketing",
+        "mkt"
+      ]
+    },
+    {
+      "nome": "Dados",
+      "curto": "Dados",
+      "apelidos": [
+        "dados",
+        "bi"
+      ]
+    },
+    {
+      "nome": "Tecnologia",
+      "curto": "Tecnologia",
+      "apelidos": [
+        "tecnologia",
+        "ti"
+      ]
+    },
+    {
+      "nome": "Outros",
+      "curto": "Outros",
+      "apelidos": [
+        "outros"
+      ]
+    }
+  ],
+  "jira": {
+    "base": "https://sua-empresa.atlassian.net",
+    "projeto": "ABC",
+    "quadro": 123,
+    "epico": "ABC-100",
+    "tipo": "História",
+    "credencial": "Escriba/Jira"
+  }
+}

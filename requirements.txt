@@ -1,0 +1,6 @@
+# Só a leitura do cache do Teams precisa de pacote de fora; o servidor é biblioteca padrão.
+# ccl_chromium_reader não está no PyPI: vem do GitHub, numa versão fixa.
+ccl_chromium_reader @ git+https://github.com/cclgroupltd/ccl_chromium_reader.git@ef840de30221c4d65bc96d2f4d9057e9ef2f526d
+ccl_simplesnappy @ git+https://github.com/cclgroupltd/ccl_simplesnappy.git@3d085230baa8c46cf2090ebba29bf6e8eab31087
+brotli==1.2.0
+zstd==1.5.7.2

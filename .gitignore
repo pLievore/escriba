@@ -1,0 +1,28 @@
+# ---------------------------------------------------------------- dados de quem usa (nunca versionar)
+# Conversas exportadas do Teams: dado pessoal/corporativo
+export/
+# Pendências, projetos, índice do cérebro e histórico do agente
+dados/
+# Entregas do agente (rascunhos, consultas, documentos de trabalho)
+entregas/
+
+# ---------------------------------------------------------------- configuração e extensões locais
+# Nome, cargo, áreas e Jira desta instância (o formato está em config.exemplo.json)
+config.local.json
+# Extensões locais do agente e do painel: ficam só na máquina de quem as usa
+servidor/local/
+servidor/static/local/
+# Instruções privadas para o Claude Code (o CLAUDE.md público é genérico)
+CLAUDE.local.md
+.claude/
+
+# ---------------------------------------------------------------- documentos de trabalho, só locais
+docs/DESIGN.md
+docs/HANDOFF.md
+servidor/static/v1.html
+
+# ---------------------------------------------------------------- ambiente
+.venv/
+__pycache__/
+*.pyc
+*.md.bak
